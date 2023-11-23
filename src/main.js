@@ -247,7 +247,6 @@ function createFistModel(generalPath, pathMtl, pathObj) {
                 object.scale.set(1, 1, 1);
                 object.position.set(-50, 5, 20);
                 object.rotation.y += Math.PI / 2;
-                informacion();
             } else if (pathObj === 'oso polar.obj') {
                 object.scale.set(1.5, 1.5, 1.5);
                 object.position.set(-26, 5, 20);
@@ -282,26 +281,7 @@ function createFistModel(generalPath, pathMtl, pathObj) {
     });
 }
 
-function informacion(){
-    var textGeometry = new THREE.TextGeometry('El panda es un animal muy perezoso', {
-        size: 20, // Tamaño del texto
-        height: 0.6, // Grosor del texto
-    });
-    
-    // Crear un material para el texto
-    var textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    
-    // Crear un objeto Mesh utilizando la geometría y el material
-    var textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    
-    // Posicionar y rotar el texto en 3D
-    textMesh.position.set(-50, 10, 20);
-     // Ajusta según sea necesario
-    
-    // Agregar el texto a la escena
-    scene.add(textMesh);
-    
-}
+
 
 
 function initGUI() {
