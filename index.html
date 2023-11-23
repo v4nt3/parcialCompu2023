@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zoo</title>
+    <link rel="icon" href="./img/zoo.png">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    
+    <!-- Add all for GUI -->
+    <script src="./src/libs/jquery-1.11.1.js"></script>
+    <script src="./src/libs/three.js"></script>
+    <script src="./src/libs/DAT.GUI.min.js"></script>
+    <script src="./src/libs/Stats.js"></script>
+    <!-- ////////////////-->
+    <script src='./src/collider/better.js'></script> <!--New-->
+    <script src="./vendors/three.js-master/build/three.min.js"></script>
+    <script src="./src/collider/threex.collider.js"></script> <!--New-->
+    <script src="./src/collider/threex.collidersystem.js"></script> <!--New-->
+    <script src="./src/collider/threex.colliderhelper.js"></script> <!--New-->
+    <script src="./vendors/controls/OrbitControls.js"></script>
+    <script src="./vendors/load/OBJLoader.js"></script>
+    <script src="./vendors/load/MTLLoader.js"></script>
+
+    <script src="./src/mov/FPSControls.js"></script>
+	<script src="./src/mov/pointerlock.js"></script>
+	<script src="./src/Sound.js"></script>
+
+    <script src="./src/main.js"></script>
+    <!-- <script src="./src/poweup.js"></script> -->
+
+</head>
+<body onload="start()">
+    <canvas id="app"></canvas>
+    <div id="blocker">
+        <div id="instructions">
+            <span onclick="go2Play()"style="font-size:40px">Click to Play</span>  
+            <br/>          
+            (W, S, = Move A, D, = Rotate)
+        </div>
+    </div>
+    <div id="lost" style="display: none;">
+        <div id="instructions">
+            <span onclick="go2Play()"style="font-size:40px">Click to Play</span>  
+            <br/>          
+            You Lost
+        </div>
+    </div>
+    <div id="timer">
+        <span class="timertext"></span>  
+        <span class="timertext" id="minutes"></span>
+        <span class="timertext" id="break">:</span>
+        <span class="timertext" id="seconds"></span>
+	</div>
+
+    <div id="animalInfo">
+        <img id="animalImage" src="" alt="Animal Image">
+        <p id="animalDescription"></p>
+    </div>
+    <button id="mostrarInfoBtn" onclick="mostrarInformacion()">Mostrar Información del Panda</button>
+    <div id="infoPanda" style="display: none;">
+        <p>
+            El panda gigante (Ailuropoda melanoleuca) es un mamífero carnívoro que pertenece a la familia de los osos (Ursidae). Su pariente más cercano es el oso de anteojos. A diferencia del panda rojo, que tiene su propia familia (Ailuridae), el panda gigante es nativo de China central y habita en regiones montañosas, principalmente en Sichuan, a alturas de hasta 3500 m s. n. m. En 2017, se estimó que la población total superaba los dos mil ejemplares, con 1864 viviendo en libertad.
+            <br><br>
+            El panda es el símbolo de WWF desde 1961. Su dieta consiste principalmente en bambú (alrededor del 99%), pero también consume frutos, pequeños mamíferos, peces e insectos. Aunque es un buen trepador, rara vez se le ve en los árboles. Se adapta bien a la cautividad y su pelaje le permite soportar las condiciones invernales de su hábitat.
+        </p>
+    </div>
+    <button id="osoPolarBtn" onclick="mostrarOsoPolarInfo()">Información del Oso Polar</button>
+    <div id="osoPolarInfo" style="display: none;">
+        <p>
+            El oso polar, también conocido como oso blanco (Ursus maritimus), es un mamífero carnívoro de la familia de los osos (Ursidae) y uno de los carnívoros terrestres más grandes de la Tierra, junto con su pariente el oso Kodiak. Habita en el medio polar y zonas heladas del hemisferio norte, siendo el único superdepredador del Ártico.
+            <br><br>
+            En 1965, la Primera Sesión Científica sobre el Oso Polar reportó una población de entre 5000 y 19 000 ejemplares. Según la Unión Internacional para la Conservación de la Naturaleza, la población de osos polares se estimó entre 22 000 y 27 000 en 1997, y entre 22 000 y 31 000 en 2021. Estas cifras indican una preocupación por la conservación de esta especie en el contexto del cambio climático y la pérdida de hábitat en el Ártico.
+        </p>
+    </div>
+    <button id="camelloBtn" onclick="mostrarCamelloInfo()">Información del Camello</button>
+    <div id="camelloInfo" style="display: none;">
+        <p>
+            Camelus es un género de mamíferos artiodáctilos de la familia Camelidae, que incluye las tres especies vivientes de camellos y dromedarios en el Viejo Mundo. Las especies son el dromedario (94% de la población mundial), el camello bactriano de dos jorobas (6%), y el camello salvaje, en peligro de extinción. Los camellos llegaron a Asia desde América del Norte a través del Estrecho de Bering y se extendieron por África y el desierto del Sáhara. Fueron domesticados alrededor del 2000 a.C. por su capacidad para resistir temperaturas elevadas y sobrevivir sin agua durante períodos prolongados. Aunque hay unos 15,5 millones de camellos en total, la mayoría son domésticos, y los camellos salvajes, especialmente el bactriano, están casi extintos, con alrededor de 1.000 en el desierto del Gobi en China y Mongolia.
+        </p>
+    </div>
+    <button id="tortugaBtn" onclick="mostrartotugaInfo()">Información de la tortuga</button>
+    <div id="tortuga" style="display: none;">
+        <p>
+            Son animales ovíparos que cavan sus nidos en la tierra, donde llevan a cabo la incubación de los huevos. A pesar de que carecen de dientes, cuentan con un fuerte pico que usan para alimentarse. Además de plantas, también comen insectos, caracoles y lombrices. Existen especies marinas y terrestres.
+        </p>
+    </div>
+	<audio id="myAudio">
+        <source src="" type="audio/mpeg">
+		Your browser does not support the audio element.
+	</audio>
+	<script>
+		var panda = document.getElementById("myAudio"); 
+        var camello = document.getElementById("myAudio"); 
+        var polar = document.getElementById("myAudio"); 
+        var tortuga = document.getElementById("myAudio"); 
+
+		function playAudio() { 
+			panda.play(); 
+            camello.play();
+            polar.play();
+            tortuga.play();
+		} 
+        
+	</script>
+
+</body>
+</html>
