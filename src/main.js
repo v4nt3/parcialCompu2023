@@ -68,7 +68,10 @@ function playAudio() {
 
 function pricipalPlayer() {
     var geometry = new THREE.BoxGeometry(1, 2, 1, 1, 2, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0xFDB066, wireframe: true });
+    var material = new THREE.MeshBasicMaterial({  color: 0x0099ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0});
     ppPlayer = new THREE.Mesh(geometry, material);
     ppPlayer.position.x = -35.5;
     ppPlayer.position.y = 7;
@@ -186,9 +189,7 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function informacion(animalInfo) {
-    alert("Información de " + animalInfo.nombre + ": " + animalInfo.descripcion);
-}
+
 function mostrarInformacion() {
     var infoPanda = document.getElementById("infoPanda");
     if (infoPanda.style.display === "none") {
@@ -228,11 +229,6 @@ function createFistModel(generalPath, pathMtl, pathObj) {
     mtlLoader.setPath(generalPath);
     mtlLoader.load(pathMtl, function (materials) {
         materials.preload();
-        var textureLoader = new THREE.TextureLoader();
-        var iconTexture = textureLoader.load('./img/informacion.png');
-        var iconMaterial = new THREE.MeshBasicMaterial({ map: iconTexture, side: THREE.DoubleSide });
-        var iconGeometry = new THREE.CircleGeometry(0.2, 32);
-        var iconMesh = new THREE.Mesh(iconGeometry, iconMaterial);
 
         var objLoader = new THREE.OBJLoader();
         objLoader.setMaterials(materials);
@@ -251,26 +247,19 @@ function createFistModel(generalPath, pathMtl, pathObj) {
                 object.scale.set(1, 1, 1);
                 object.position.set(-50, 5, 20);
                 object.rotation.y += Math.PI / 2;
-                iconMesh.position.set(-40, 7.5, 15);
-                iconMesh.rotation.y += Math.PI / 2;
+                informacion();
             } else if (pathObj === 'oso polar.obj') {
                 object.scale.set(1.5, 1.5, 1.5);
                 object.position.set(-26, 5, 20);
                 object.rotation.set(0, 8, 0);
-                iconMesh.position.set(-30, 7.5, 15);
-                iconMesh.rotation.y += Math.PI / 2;
             } else if (pathObj === 'tortuga(2) vox.obj') {
                 object.scale.set(1, 1, 1);
                 object.position.set(-46, 7, -3);
                 object.rotation.set(0, 2, 0);
-                iconMesh.position.set(-40, 7.5, 0);
-                iconMesh.rotation.y += Math.PI / 2;
             } else if (pathObj === 'camello.obj') {
                 object.scale.set(1, 1, 1);
                 object.position.set(-26, 5, -6);
                 object.rotation.set(0, 4, 0);
-                iconMesh.position.set(-30, 7.5, 0);
-                iconMesh.rotation.y += Math.PI / 2;
             }
             else if (pathObj === 'panda2.obj') {
                 object.scale.set(1, 1, 1);
@@ -289,41 +278,30 @@ function createFistModel(generalPath, pathMtl, pathObj) {
                 object.position.set(-26, 5, 2);
                 object.rotation.set(0, 5, 0);
             }
-
-            // Configuración de la información específica del animal
-            var animalInfo = obtenerInformacionEspecifica(pathObj);
-
-            // Configura la propiedad userData del objeto del animal
-            object.userData = { animal: pathObj, info: animalInfo };
-
-            // Configura la posición del icono
-            iconMesh.position.set(-40, 7.5, 15);
-            iconMesh.rotation.y += Math.PI / 2;
-            scene.add(iconMesh);
-
-            // Configura la propiedad userData del objeto del icono
-            iconMesh.userData = { animal: pathObj, info: animalInfo };
-
-            // Agrega un listener de eventos al elemento del DOM asociado al iconMesh
-            iconMesh.element = document.createElement('div');
-            iconMesh.element.innerHTML = '<img src="./img/informacionPanda.png" style="width: 100%; height: 100%;" />';
-            iconMesh.element.style.position = 'absolute';
-            iconMesh.element.style.cursor = 'pointer';
-            iconMesh.element.style.width = '50px';
-            iconMesh.element.style.height = '50px';
-            iconMesh.element.style.left = 'calc(50% - 25px)';
-            iconMesh.element.style.top = 'calc(50% - 25px)';
-            document.body.appendChild(iconMesh.element);
-
-            iconMesh.element.addEventListener('mousedown', function () {
-                informacion(iconMesh.userData.info);
-            });
-            
         });
     });
 }
 
-
+function informacion(){
+    var textGeometry = new THREE.TextGeometry('El panda es un animal muy perezoso', {
+        size: 20, // Tamaño del texto
+        height: 0.6, // Grosor del texto
+    });
+    
+    // Crear un material para el texto
+    var textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    
+    // Crear un objeto Mesh utilizando la geometría y el material
+    var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    
+    // Posicionar y rotar el texto en 3D
+    textMesh.position.set(-50, 10, 20);
+     // Ajusta según sea necesario
+    
+    // Agregar el texto a la escena
+    scene.add(textMesh);
+    
+}
 
 
 function initGUI() {

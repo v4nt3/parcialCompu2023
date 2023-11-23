@@ -31,7 +31,9 @@ class Sound {
             new THREE.SphereGeometry(1, 5, 5),
             new THREE.MeshBasicMaterial({
                 color: 0x0099ff,
-                wireframe: true
+                wireframe: true,
+                transparent: true,
+                opacity: 0
             })
         );
         this.mesh.position.set(this.position.x, this.position.y, this.position.z);
